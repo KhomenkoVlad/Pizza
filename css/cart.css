@@ -1,0 +1,66 @@
+body{
+    margin: 0;
+}
+
+.wrapper {
+    width: 70%;
+    margin: 0 auto;
+}
+
+header{
+    background-color: bisque;
+    text-align: center;
+    margin: 0;
+}
+
+a:link{ 
+    text-decoration: none;
+    color: black;
+}
+
+a:visited{ 
+    text-decoration: none;
+    color: black;
+}
+
+a:active{ 
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{ 
+    text-decoration: none;
+    color: black;
+}
+
+nav ul{
+    background-color: coral;
+    width: 100%;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+nav li{
+    display: inline-block;
+    background-color: aquamarine;
+    margin: 0px;
+	padding: 0px;
+}
+
+.main-catalog{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.catalog-item{
+    background-color: antiquewhite;
+    padding: 5px;
+    text-align: center;
+    margin: 5px;
+}
+
+img{
+    width: 50px;
+}
