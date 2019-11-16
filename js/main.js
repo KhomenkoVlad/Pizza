@@ -1,9 +1,4 @@
-/*cloneObject = function cloneObject(source) {
-    return Object.assign(Object.create(Object.getPrototypeOf(source)), source);
-};*/
-  
-
-item = [2], cart = {}, size = 0, goods = {}; // корзина
+item = [2], cart = {}; // корзина
 
 function init() {
     $.post("admin/core.php", {
@@ -53,31 +48,13 @@ function addToCart() {
     //var id_size = $(this).attr('value');
     var sizeName = $(this)[0].dataset.name;
     id_size = getCheckedValue(document.getElementsByName(sizeName));
-
-    /*item = "{\"id_menu\":\"" + id_menu + "\"," + "\"id_size\":\"" + id_size + "\"}";
-    console.log(item);
-    data_item = JSON.parse(item);
-    console.log(data_item);*/
-    //quantity
-
     item = [id_menu, id_size];
-
-    /*let product = goods.map(item => {item.id === id_size});
-    
-    let found = cart.find((product) => {
-        return product.name === currentItem.name && product.price === currentItem.price;
-    });
-
-    console.log('product', product);
-    console.log('found', found);*/
-
     if (cart[item] == undefined) {
         //cart = cloneObject(cart[item]);
         cart[item] = 1;
     } else {
         cart[item]++;
     }
-
     showMiniCart(cart);
     saveCart(cart);
 }

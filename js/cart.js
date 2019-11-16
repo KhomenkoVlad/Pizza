@@ -1,17 +1,10 @@
 var item = [], cart = {};
 
 function init() {
-    /*$.post(
-        "admin/core.php",
-        {
-            "action" : "init"
-        },
-        showCart
-    );*/
     $.post(
         "admin/core.php",
         {
-            "action" : "initStreet"
+            "action": "initStreet"
         },
         showStreet
     );
@@ -22,55 +15,46 @@ function loadCart() {
     if (localStorage.getItem('cart')) {
         // если есть - расширфровываю и записываю в переменную cart
         cart = JSON.parse(localStorage.getItem('cart'));
-            showCart();
-        }
-    else {
+        showCart();
+    } else {
         $('.main-cart').html('Корзина пуста!');
     }
 }
 
-function showStreet(data_street){
-    /*$.post(
-        "admin/core.php",
-        {
-            "action" : "initStreet"
-        }, function (data_street) {*/
-            var streets = JSON.parse(data_street);
-            var out='<select id="istreet">';
-            for (var id in streets) {
-                out +=`<option value="${id}">${streets[id].name_street}</option>`;
-            }
-            out +='</select>';
-            $('.select-street').html(out);
-        //});
+function showStreet(data_street) {
+    var streets = JSON.parse(data_street);
+    var out = '<select id="istreet">';
+    for (var id in streets) {
+        out += `<option value="${id}">${streets[id].name_street}</option>`;
+    }
+    out += '</select>';
+    $('.select-street').html(out);
 }
 
 function showCart(data) {
     //вывод корзины
     if (!isEmpty(cart)) {
         $('.main-cart').html('Корзина пуста!');
-    }
-    else {
+    } else {
         $.post(
-        "admin/core.php",
-        {
-            "action" : "init"
-        }, function (data) {
-            var menu = JSON.parse(data);
-            $.post(
-                "admin/core.php",
-                {
-                    "action" : "initSize"
-                }, function (data_size) {
-                    var sizes = JSON.parse(data_size);
-                    console.log('menu = ', menu, 'cart = ', cart);
-                    var out = '', total = 0;
-                    for (var items in cart) {
-                        item = items.split(',');
-                        id_menu = item[0];
-                        id_size = item[1];
-                        //console.log(showSize(id_size));
-                        out += `<button data-id="${id_menu},${id_size}" class="del-goods">x</button>
+            "admin/core.php",
+            {
+                "action": "init"
+            }, function (data) {
+                var menu = JSON.parse(data);
+                $.post(
+                    "admin/core.php",
+                    {
+                        "action": "initSize"
+                    }, function (data_size) {
+                        var sizes = JSON.parse(data_size);
+                        console.log('menu = ', menu, 'cart = ', cart);
+                        var out = '', total = 0;
+                        for (var items in cart) {
+                            item = items.split(',');
+                            id_menu = item[0];
+                            id_size = item[1];
+                            out += `<button data-id="${id_menu},${id_size}" class="del-goods">x</button>
                         <img src="img\\pizza\\${menu[id_menu].name_menu}.png">
                         ${menu[id_menu].name_menu}
                         <button data-id="${id_menu},${id_size}" class="minus-goods">-</button> 
@@ -79,15 +63,16 @@ function showCart(data) {
                         ${sizes[id_size].name_size}  
                         ${cart[items] * menu[id_menu].price_menu}
                         <br>`;
-                        total += cart[items] * menu[id_menu].price_menu;
-                        out += `<br>`;
-                    }
-                    out += '<p>Всего: ' + total + '</p>';
-                    $('.main-cart').html(out);
-                    $('.del-goods').on('click', delGoods);
-                    $('.plus-goods').on('click', plusGoods);
-                    $('.minus-goods').on('click', minusGoods);
-        });});
+                            total += cart[items] * menu[id_menu].price_menu;
+                            out += `<br>`;
+                        }
+                        out += '<p>Всего: ' + total + '</p>';
+                        $('.main-cart').html(out);
+                        $('.del-goods').on('click', delGoods);
+                        $('.plus-goods').on('click', plusGoods);
+                        $('.minus-goods').on('click', minusGoods);
+                    });
+            });
     }
 }
 
@@ -98,6 +83,7 @@ function delGoods() {
     saveCart();
     showCart();
 }
+
 function plusGoods() {
     //добавляет товар в корзине
     var id = $(this).attr('data-id');
@@ -105,13 +91,13 @@ function plusGoods() {
     saveCart();
     showCart();
 }
+
 function minusGoods() {
     //уменьшаем товар в корзине
     var id = $(this).attr('data-id');
-    if (cart[id]==1) {
+    if (cart[id] == 1) {
         delete cart[id];
-    }
-    else {
+    } else {
         cart[id]--;
     }
     saveCart();
@@ -125,65 +111,68 @@ function saveCart() {
 
 function isEmpty(object) {
     //проверка корзины на пустоту
-    for (var key in object)
-    if (object.hasOwnProperty(key)) return true;
+    for (const key in object) {
+        if (object.hasOwnProperty(key)) {
+            return true;
+        }
+    }
     return false;
 }
 
-function sendEmail() {
-    var iname = $('#iname').val();
-    var imail = $('#imail').val();
-    var iphone = $('#iphone').val();
-    var istreet = $('#istreet').val();
-    var ihouse = $('#ihouse').val();
-    var iapart = $('#iapart').val();
-    console.log('cart = ', cart);
+function addToOrders() {
+    const cartJson = new Array();
+    const iname = $('#iname').val();
+    const imail = $('#imail').val();
+    const iphone = $('#iphone').val();
+    const istreet = $('#istreet').val();
+    const ihouse = $('#ihouse').val();
+    const iapart = $('#iapart').val();
+
     for (var items in cart) {
         item = items.split(',');
         id_menu = item[0];
         id_size = item[1];
         quantity = cart[items];
+        cartJson.push({id_menu, id_size, quantity});
         console.log('id_menu = ', id_menu, 'id_size = ', id_size, 'quantity = ', quantity);
     }
-    if (iname!='' && imail!='' && iphone!='' && istreet!='' && ihouse!='') {
-        if (isEmpty(cart)) {
-            
-                $.post(
-                    "admin/core.php",
-                    {
-                        "action" : "addToOrders",
-                        "iname" : iname,
-                        "imail" : imail,
-                        "iphone" : iphone,
-                        "istreet" : istreet,
-                        "ihouse" : ihouse,
-                        "iapart" : iapart,
-                        "cart" : cart
-                    },
-                    function(data){
-                        if (data==1) {
-                            alert('Заказ отправлен');
-                        }
-                        else {
-                            alert('Повторите заказ');
-                        }
-                    }
-                );
-            
-        }
-        else {
-            alert('Корзина пуста');
-        }
-    }
-    else {
-        alert('Заполните поля');
-    }
 
+    if (iname !== '' && imail !== '' && iphone !== '' && istreet !== '' && ihouse !== '') {
+        const user = JSON.stringify({
+            iname,
+            imail,
+            iphone,
+            istreet,
+            ihouse,
+            iapart,
+        });
+        const cart = JSON.stringify(cartJson);
+        if (isEmpty(cart)) {
+            $.post(
+                "admin/core.php", {
+                    'action': 'addToOrders',
+                    user,
+                    cart,
+                },
+                function (data) {
+                    if (data === 1) {
+                        console.log('Заказ отправлен');
+                    } else {
+                        console.log('Повторите заказ');
+                    }
+                }
+            );
+        } else {
+            console.log('Корзина пуста');
+        }
+    } else {
+        console.log('Заполните поля');
+    }
 }
 
 $(document).ready(function () {
     loadCart();
     init();
-   
-    $('.send-email').on('click', sendEmail); // отправить письмо с заказом
+
+    $('.send-email').on('click', addToOrders); // отправить письмо с заказом
 });

@@ -92,15 +92,34 @@ function newGoods(){
 }
 
 function addToOrders() {
-    /*$conn = connect();
-    $name = $_POST['iname'];
-    $phone = $_POST['iphone'];
-    $mail = $_POST['imail'];
-    $street = $_POST['istreet'];
-    $house = $_POST['ihouse'];
-    $apart = $_POST['iapart'];
+    if (isset($_REQUEST['cart'])) {
+        $cart = json_decode($_REQUEST['cart'], true);
+    }
+    if (isset($_REQUEST['user'])) {
+        $user = json_decode($_REQUEST['user'], true);
+    }
+    $name = $user['iname'];
+    $phone = $user['iphone'];
+    $mail = $user['imail'];
+    $street = $user['istreet'];
+    $house = $user['ihouse'];
+    $apart = $user['iapart'];
 
-    $sql = "INSERT INTO client (name_client, phone, email, street_client, house, apartment) 
-    VALUES ('$name', '$phone', '$mail', '$street', '$house', '$apart')";
-    $result = @pg_query($conn, $sql) or die("Error add clients");*/
+    $conn = connect();
+    $sql = "INSERT INTO client (name_client, phone, email, street_client, house, apartment)
+        VALUES ('$name', '$phone', '$mail', '$street', '$house', '$apart') RETURNING id_client";
+    $result = pg_query($conn, $sql);
+    $row = pg_fetch_row($result);
+    $new_id = $row['0'];
+    echo $new_id;
+
+    for ($i = 0; $i < count($cart); $i++) {
+        $id_menu = $cart[$i]['id_menu'];
+        $id_size = $cart[$i]['id_size'];
+        $quantity = $cart[$i]['quantity'];
+        $sql = "INSERT INTO orders (menu_order, size_order, client_order, data, status, quantity)
+            VALUES ('$id_menu', '$id_size', '$new_id', NOW(), 'true', '$quantity')";
+        $result2 = pg_query($conn, $sql);
+    }
+
 }
