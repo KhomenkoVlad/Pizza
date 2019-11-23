@@ -27,7 +27,7 @@ function showGoods(data) {
     var out = '', index = 1;
     for (var id_menu in data) {
         out +=`<div class="catalog-item">
-			<img src="img/pizza/${data[id_menu].name_menu}.png" alt="pizza">
+			<img src="admin/img/pizza/${data[id_menu].name_menu}.png" alt="pizza">
 			<p>${data[id_menu].name_menu} (${data[id_menu].weight})</p>
             <p class="price${id_menu}">${data[id_menu].price_menu}</p>
             <p>
