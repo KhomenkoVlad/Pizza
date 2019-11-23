@@ -10,4 +10,3 @@ if(!$_SESSION['admin']){
     header("Location: signin.php");
     exit;
 }
-?>

@@ -10,12 +10,16 @@ function init() {
 
 function showGoods(data) {
     data = JSON.parse(data);
-    var out = '<select>';
+    var out = '<div class="input-group mb-3">\n' +
+        '  <div class="input-group-prepend">\n' +
+        '    <label class="input-group-text" for="inputGroupSelect01">Виды товара</label>\n' +
+        '  </div>' +
+        '<select class="custom-select" id="inputGroupSelect01">';
     out += '<option data-id="0">Новая пицца</option>';
     for (var id_menu in data) {
         out +=`<option data-id="${id_menu}">${data[id_menu].name_menu}</option>`;
     }
-    out += `</select>`;
+    out += `</select></div>`;
     $('.goods-out').html(out);
     $('.goods-out select').on('change', selectGoods);
 }

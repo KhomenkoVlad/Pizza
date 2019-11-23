@@ -1,33 +1,36 @@
 <?php
 $do = '';
 require "auth.php";
-
-if ($_POST['submit']) {
-    putenv("PGPASSWORD = admin");
-    $dumpcmd = array("pg_dump", "-i", "-U", escapeshellarg("postgres"), "-F", "c", "-b", "-v", "-f", escapeshellarg("/backups/backup.sql"), escapeshellarg("Pizzeria"));
-    exec( join(' ', $dumpcmd), $cmdout, $cmdresult );
-    putenv("PGPASSWORD");
-    if ($cmdresult != 0)
-    {
-        echo "error";
-    }
-    //echo proc_open('sudo -u root C:/Program Files/PostgreSQL/9.4/bin\pg_dump.exe --host localhost --port 5432 --username "postgres" --no-password  --format custom --blobs --encoding UTF8 --column-inserts --verbose --quote-all-identifiers --file "E:\sites\Pizza\admin\backups\backup1.backup" "Pizzeria"');
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous"
+    >
     <title>Title</title>
 </head>
 <body>
-    <nav>
-        <a href="index.php?do=logout">Выход</a>
-        <form class="form-signin" method="post">
-            <input type="submit" name="submit" value="BackUp">
-        </form>
-    </nav>
+<nav class="card-header">
+    <div class="container">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="index.php">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php">Добавить</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.php?do=logout">Выход</a>
+            </li>
+        </ul>
+    </div>
+</nav>
     <div class="orders">
 
     </div>
