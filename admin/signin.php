@@ -4,13 +4,18 @@ session_start();
 if ($_POST['submit']) {
     if ('admin' == $_POST['user'] AND  md5('admin') == md5($_POST['pass'])) {
         $_SESSION['admin'] = true;
-        header("Location: admin.html");
+        header("Location: index.php");
         exit;
     } else {
         echo '<p>Логин или пароль неверны!</p>';
     }
 }
 var_dump($_POST);
+
+if($_SESSION['admin']){
+    header("Location: index.php");
+    exit;
+}
 
 ?><!doctype html>
 <html lang="ru">

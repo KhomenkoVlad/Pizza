@@ -1,3 +1,7 @@
+<?php
+require "auth.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +9,9 @@
     <title>Title</title>
 </head>
 <body>
+    <nav>
+        <a href="admin.php?do=logout">Выход</a>
+    </nav>
     <div id="goods-out" class="goods-out"></div>
     <h2>Пицца</h2>
     <form enctype="multipart/form-data" method="post">
