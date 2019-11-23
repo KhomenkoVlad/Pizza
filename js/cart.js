@@ -23,7 +23,7 @@ function loadCart() {
 
 function showStreet(data_street) {
     var streets = JSON.parse(data_street);
-    var out = '<select id="istreet">';
+    var out = '<select id="istreet" class="input-field">';
     for (var id in streets) {
         out += `<option value="${id}">${streets[id].name_street}</option>`;
     }
@@ -49,20 +49,25 @@ function showCart(data) {
                     }, function (data_size) {
                         var sizes = JSON.parse(data_size);
                         console.log('menu = ', menu, 'cart = ', cart);
-                        var out = '', total = 0;
+                        var out = '<ul class="cart__list">', total = 0;
                         for (var items in cart) {
                             item = items.split(',');
                             id_menu = item[0];
                             id_size = item[1];
-                            out += `<button data-id="${id_menu},${id_size}" class="del-goods">x</button>
-                            <img src="img\\pizza\\${menu[id_menu].name_menu}.png">
-                            ${menu[id_menu].name_menu}
-                            <button data-id="${id_menu},${id_size}" class="minus-goods">-</button> 
-                            ${cart[items]}
-                            <button data-id="${id_menu},${id_size}" class="plus-goods">+</button>  
-                            ${sizes[id_size].name_size}  
-                            ${cart[items] * menu[id_menu].price_menu * sizes[id_size].multiply}
-                            <br>`;
+                            out += `<li class="cart__item">
+                                
+                                <div class="cart__line-product">${menu[id_menu].name_menu} ${sizes[id_size].name_size}</div>
+                                <div class="cart__line-count-control">
+                                    <button data-id="${id_menu},${id_size}" class="minus-goods product__button button--control">-</button> 
+                                    <span>${cart[items]}</span>
+                                    <button data-id="${id_menu},${id_size}" class="plus-goods product__button button--control">+</button>  
+                                    <div class="cart__line-price">${cart[items] * menu[id_menu].price_menu * sizes[id_size].multiply}</div>
+                                    <div class="cart__line-delete">
+                                        <button data-id="${id_menu},${id_size}" class="del-goods product__button">Удалить</button>
+                                    </div>
+                                </div>
+                                <br>
+                            </li>`;
                             total += cart[items] * menu[id_menu].price_menu * sizes[id_size].multiply;
                             out += `<br>`;
                         }

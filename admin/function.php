@@ -59,9 +59,9 @@ function initOrders(){
     //вывожу список товаров
     $conn = connect();
     $sql = "SELECT orders.id_order, orders.client_order, 
-    client.name_client, client.phone, client.email, 
-    street.name_street, street.price_delivery, client.house,
-    client.apartment, menu.name_menu, orders.quantity, size.name_size,
+    client.name_client, client.phone, client.email, street.name_street, 
+    street.price_delivery, client.house, client.apartment, 
+    menu.name_menu, orders.quantity, size.name_size, orders.status,
     cost_order(menu.price_menu, size.multiply, orders.quantity) AS Cost
     
     FROM orders, client, street, menu, size

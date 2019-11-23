@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="css/cart.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
         <meta charset="utf-8">
         <title>pizzArzis</title>
     </head>
     <body>
     <div class="wrapper">
         <header>
-            <h1><a href="index.html">pizzArzis</a></h1>
+            <div class="one">
+                <a href="index.html">
+                    <h1>Pizza Arzis</h1>
+                </a>
+            </div>
         </header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Пиццы</a></li>
-                <li><a href="cart.html">Корзина</a></li>
-            </ul>
-        </nav>
-        <div class="main-cart"></div>
+        <div class="cart__list">
+            <div class="main-cart"></div>
+        </div>
         <div class="email-field">
-                <p>Имя: </p><input type="text" id="iname">
-                <p>Телефон: </p><input type="text" id="iphone">
-                <p>Email: </p><input type="text" id="imail">
-                <p>Улица : </p><div  class="select-street"></div>
-                <p>Дом: </p><input type="text" id="ihouse">
-                <p>Квартира: </p><input type="text" id="iapart">
-                <p><button class="send-email">Заказать</button></p>
+                <label>Имя: </label><input type="text" id="iname" class="input-field">
+                <label>Телефон: </label><input type="text" id="iphone" class="input-field">
+                <label>Email: </label><input type="text" id="imail" class="input-field">
+                <label>Улица : </label><div  class="select-street "></div>
+                <label>Дом: </label><input type="text" id="ihouse" class="input-field">
+                <label>Квартира: </label><input type="text" id="iapart" class="input-field"><br>
+                <a href="#/" class="router-link-active"><button class="product__button back">Вернуться в меню</button></a>
+                <label><button class="send-email product__button">Заказать</button></label>
         </div>
         <footer>
             <hr>

@@ -24,27 +24,38 @@ function showGoods(data) {
 	//выводим товар на страницу
     data = JSON.parse(data);
 	console.log('showGoods(data)', data);
-    var out = '', index = 1;
+    var out = '', index = 1, index_id = 1;
     for (var id_menu in data) {
         out +=`<div class="catalog-item">
-			<img src="admin/img/pizza/${data[id_menu].name_menu}.png" alt="pizza">
-			<p>${data[id_menu].name_menu} (${data[id_menu].weight})</p>
-            <p class="price${id_menu}">${data[id_menu].price_menu}</p>
-            <p>
-                <label>
-                    <input type="radio" name="size${index}" value="1" checked onClick="$('.price${id_menu}').html(getValue(${data[id_menu].price_menu}, 1))">
-                    Малая
-                </label>
-                <label>                
-                    <input type="radio" name="size${index}" value="2" onClick="$('.price${id_menu}').html(getValue(${data[id_menu].price_menu}, 1.5))">
-                    Средняя
-                </label>
-                <label>
-                    <input type="radio" name="size${index}" value="3" onClick="$('.price${id_menu}').html(getValue(${data[id_menu].price_menu}, 2))">
-                    Большая
-                </label>
-            </p>
-			<button class="add-to-cart" data-id="${id_menu}" data-name="size${index}">Добавить в корзину</button>
+			<img src="admin/img/pizza/${data[id_menu].name_menu}.png" class="product__img" alt="pizza">
+			<div class="product__info">
+                <div class="product__title">${data[id_menu].name_menu}</div>
+                <div class="product__price">(${data[id_menu].weight})</div>
+                <p class="price${id_menu} product__price">${data[id_menu].price_menu} грн</p>
+                <ul class="product__options">
+                    <li class="product__option-item">
+                        <input class="product__option-input" type="radio" id="item${index_id}" name="size${index}" value="1" checked onClick="$('.price${id_menu}').html(getValue(${data[id_menu].price_menu}, 1))">
+                        <label class="product__option-label" for="item${index_id++}">
+                            <span class="product__option-unit">Малая</span>
+                        </label>
+                    </li>
+                    <li class="product__option-item">
+                        <input class="product__option-input" type="radio" id="item${index_id}" name="size${index}" value="2" onClick="$('.price${id_menu}').html(getValue(${data[id_menu].price_menu}, 1.5))">
+                        <label class="product__option-label" for="item${index_id++}">
+                            <span class="product__option-unit">Средняя</span>
+                        </label>
+                    </li>
+                    <li class="product__option-item">
+                        <input class="product__option-input" type="radio" id="item${index_id}" name="size${index}" value="3" onClick="$('.price${id_menu}').html(getValue(${data[id_menu].price_menu}, 2))">
+                        <label class="product__option-label" for="item${index_id++}">
+                            <span class="product__option-unit">Большая</span>
+                        </label>
+                    </li>
+                </ul>
+                <div class="button__wrap">
+                    <button class="product__button add-to-cart" data-id="${id_menu}" data-name="size${index}">Добавить в корзину</button>
+		        </div>
+		    </div>
         </div>`;
         index++;
     }
@@ -74,11 +85,11 @@ function saveCart(cart) {
 
 function showMiniCart(cart) {
     //показываю мини корзину
-    var out="";
-    for (var key in cart) {
-        out += key +' --- '+ cart[key]+'<br>';
+    let out = 0;
+    for (let key in cart) {
+        out += cart[key];
     }
-    $('.mini-cart').html(out);
+    $('.cart__count').html(out);
 }
 
 function loadCart() {
@@ -86,7 +97,7 @@ function loadCart() {
     if (localStorage.getItem('cart')) {
         // если есть - расширфровываю и записываю в переменную cart
         cart = JSON.parse(localStorage.getItem('cart'));
-        showMiniCart();
+        showMiniCart(cart);
     }
 }
 
