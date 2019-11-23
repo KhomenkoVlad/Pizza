@@ -13,6 +13,9 @@ switch ($action) {
     case 'initStreet':
         initStreet();
         break;
+    case 'initOrders':
+        initOrders();
+        break;
     case 'selectOneGoods':
         selectOneGoods();
         break;
@@ -21,6 +24,9 @@ switch ($action) {
         break;
     case 'newGoods':
         newGoods();
+        break;
+    case 'deleteGoods':
+        deleteGoods();
         break;
     case 'addToOrders':
         addToOrders();

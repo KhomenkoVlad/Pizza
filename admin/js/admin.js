@@ -38,6 +38,22 @@ function selectGoods(){
     );
 }
 
+function delGoods() {
+    //удаляем товар
+    var id = $('.goods-out select option:selected').attr('data-id');
+    $.post(
+        "core.php",
+        {
+            "action" : "deleteGoods",
+            "oid" : id
+        })
+        $('#oname').val('');
+        $('#oprice').val('');
+        $('#oweight').val('');
+        $('#oid').val('');
+    init();
+}
+
 function saveToDb(){
     var id = $('#oid').val();
     if(id!=0){
@@ -49,6 +65,7 @@ function saveToDb(){
                 "oname" : $('#oname').val(),
                 "oprice" : $('#oprice').val(),
                 "oweight" : $('#oweight').val(),
+                "oimg" : $('#oimg').val(),
                 "oid" : $('#oid').val()
             },
             function(){
@@ -66,6 +83,7 @@ function saveToDb(){
                 "oname" : $('#oname').val(),
                 "oprice" : $('#oprice').val(),
                 "oweight" : $('#oweight').val(),
+                "oimg" : $('#oimg').val(),
                 "oid" : $('#oid').val()
             },
             function(data){
@@ -74,9 +92,14 @@ function saveToDb(){
             }
         );
     }
+    $('#oname').val('');
+    $('#oprice').val('');
+    $('#oweight').val('');
+    $('#oid').val('');
 }
 
 $(document).ready(function () {
    init();
    $('.add-to-db').on('click', saveToDb);
+   $('.del-goods').on('click', delGoods);
 });

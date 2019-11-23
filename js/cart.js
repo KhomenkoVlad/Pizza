@@ -55,15 +55,15 @@ function showCart(data) {
                             id_menu = item[0];
                             id_size = item[1];
                             out += `<button data-id="${id_menu},${id_size}" class="del-goods">x</button>
-                        <img src="img\\pizza\\${menu[id_menu].name_menu}.png">
-                        ${menu[id_menu].name_menu}
-                        <button data-id="${id_menu},${id_size}" class="minus-goods">-</button> 
-                        ${cart[items]}
-                        <button data-id="${id_menu},${id_size}" class="plus-goods">+</button>  
-                        ${sizes[id_size].name_size}  
-                        ${cart[items] * menu[id_menu].price_menu}
-                        <br>`;
-                            total += cart[items] * menu[id_menu].price_menu;
+                            <img src="img\\pizza\\${menu[id_menu].name_menu}.png">
+                            ${menu[id_menu].name_menu}
+                            <button data-id="${id_menu},${id_size}" class="minus-goods">-</button> 
+                            ${cart[items]}
+                            <button data-id="${id_menu},${id_size}" class="plus-goods">+</button>  
+                            ${sizes[id_size].name_size}  
+                            ${cart[items] * menu[id_menu].price_menu * sizes[id_size].multiply}
+                            <br>`;
+                            total += cart[items] * menu[id_menu].price_menu * sizes[id_size].multiply;
                             out += `<br>`;
                         }
                         out += '<p>Всего: ' + total + '</p>';

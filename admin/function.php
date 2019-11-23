@@ -55,6 +55,34 @@ function initStreet(){
     }
 }
 
+function initOrders(){
+    //вывожу список товаров
+    $conn = connect();
+    $sql = "SELECT orders.id_order, orders.client_order, 
+    client.name_client, client.phone, client.email, 
+    street.name_street, street.price_delivery, client.house,
+    client.apartment, menu.name_menu, orders.quantity, size.name_size,
+    cost_order(menu.price_menu, size.multiply, orders.quantity) AS Cost
+    
+    FROM orders, client, street, menu, size
+
+    WHERE orders.client_order = client.id_client AND 
+    street.id_street = client.street_client AND
+    orders.menu_order = menu.id_menu AND
+    size.id_size = orders.size_order";
+    $result = @pg_query($conn, $sql) or die("Error query select orders");
+
+    if (pg_num_rows($result) > 0) {
+        $out = array();
+        while($row = pg_fetch_assoc($result)) {
+            $out[$row["id_order"]] = $row;
+        }
+        echo json_encode($out);
+    } else {
+        echo "0";
+    }
+}
+
 function selectOneGoods(){
     //вывожу список товаров
     $conn = connect();
@@ -77,8 +105,28 @@ function updateGoods(){
     $price = $_POST['oprice'];
     $oweight = $_POST['oweight'];
     $sql = "UPDATE menu SET name_menu = '$name', price_menu = '$price', weight = '$oweight' WHERE id_menu = '$id'";
-
     $result = @pg_query($conn, $sql) or die("Error query to update one goods");
+
+    /*if($_FILES["oimg"]["size"] > 1024*3*1024){
+        echo ("Размер файла превышает три мегабайта");
+        exit;
+    }
+    // Проверяем загружен ли файл
+    if(is_uploaded_file($_FILES["oimg"]["tmp_name"])){
+        // Если файл загружен успешно, перемещаем его
+        // из временной директории в конечную
+        move_uploaded_file($_FILES["oimg"]["tmp_name"], "img/pizza/".$_FILES["oimg"]["name"]);
+    } else {
+        echo("Ошибка загрузки файла");
+    }*/
+
+    if(move_uploaded_file($_FILES["oimg"]["tmp_name"], "img/pizza/".$_FILES["oimg"]["name"])){
+        // Если файл загружен успешно, перемещаем его
+        // из временной директории в конечную
+        echo("загрузка файла");
+    } else {
+        echo("Ошибка загрузки файла");
+    }
 }
 
 function newGoods(){
@@ -89,7 +137,30 @@ function newGoods(){
     $sql = "INSERT INTO menu(name_menu, price_menu, weight) VALUES('$name', '$price', '$oweight')";
 
     $result = @pg_query($conn, $sql) or die("Error query to insert one goods");
+
+    /*if($_FILES["oimg"]["size"] > 1024*3*1024){
+        echo ("Размер файла превышает три мегабайта");
+        exit;
+    }
+    // Проверяем загружен ли файл
+    if(is_uploaded_file($_FILES["oimg"]["tmp_name"])){
+        // Если файл загружен успешно, перемещаем его
+        // из временной директории в конечную
+        move_uploaded_file($_FILES["oimg"]["tmp_name"], "img/pizza/".$_FILES["oimg"]["name"]);
+    } else {
+        echo("Ошибка загрузки файла");
+    }*/
 }
+
+
+function deleteGoods(){
+    $conn = connect();
+    $id = $_POST['oid'];
+    $sql = "DELETE FROM menu WHERE id_menu = $id";
+
+    $result = @pg_query($conn, $sql) or die("Error query to insert one goods");
+}
+
 
 function addToOrders() {
     if (isset($_REQUEST['cart'])) {
@@ -117,9 +188,8 @@ function addToOrders() {
         $id_menu = $cart[$i]['id_menu'];
         $id_size = $cart[$i]['id_size'];
         $quantity = $cart[$i]['quantity'];
-        $sql = "INSERT INTO orders (menu_order, size_order, client_order, data, status, quantity)
+        $sql = "INSERT INTO orders (menu_order, size_order, client_order, date, status, quantity)
             VALUES ('$id_menu', '$id_size', '$new_id', NOW(), 'true', '$quantity')";
         $result2 = pg_query($conn, $sql);
     }
-
 }

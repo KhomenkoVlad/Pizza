@@ -1,24 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="css/cart.css">
-</head>
-<body>
-<header></header>
-<main>
-    <div class="main-cart"></div>
-    <div class="email-field">
-            <p>Имя: </p><input type="text" id="iname">
-            <p>Телефон: </p><input type="text" id="iphone">
-            <p>Email: </p><input type="text" id="imail">
-            <p>Улица : </p><div  class="select-street"></div>
-            <p>Дом: </p><input type="text" id="ihouse">
-            <p>Квартира: </p><input type="text" id="iapart">
-            <p><button class="send-email">Заказать</button></p>
+<html>
+    <head>
+        <link href="css/cart.css" rel="stylesheet">
+        <meta charset="utf-8">
+        <title>pizzArzis</title>
+    </head>
+    <body>
+    <div class="wrapper">
+        <header>
+            <h1><a href="index.html">pizzArzis</a></h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Пиццы</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+            </ul>
+        </nav>
+        <div class="main-cart"></div>
+        <div class="email-field">
+                <p>Имя: </p><input type="text" id="iname">
+                <p>Телефон: </p><input type="text" id="iphone">
+                <p>Email: </p><input type="text" id="imail">
+                <p>Улица : </p><div  class="select-street"></div>
+                <p>Дом: </p><input type="text" id="ihouse">
+                <p>Квартира: </p><input type="text" id="iapart">
+                <p><button class="send-email">Заказать</button></p>
+        </div>
+        <footer>
+            <hr>
+            <p>2019</p>
+        </footer>
     </div>
-</main>
 <footer></footer>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/cart.js"></script>

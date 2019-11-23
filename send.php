@@ -28,8 +28,7 @@ foreach ($order as $value) {
 $newOrder .= '';
 
 // адрес почты куда придет письмо
-$address = "radan41k@gmail.com";
-//$address = "limansoft@gmail.com";
+$address = "zatmenie8@gmail.com";
 $subject = "Заказ еды";
 // текст письма
 $note_text = "Тема: $subject \r\nНомер телефона: $phone \r\n Дополнительная информация: \r\n$newOrder";
