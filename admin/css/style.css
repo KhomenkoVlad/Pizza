@@ -11,3 +11,11 @@
     font-weight: 300;
     font-size: 2rem;
 }
+
+.container.order{
+    padding: 10px 0px;
+}
+
+.card.order{
+    margin: 10px 0px;
+}

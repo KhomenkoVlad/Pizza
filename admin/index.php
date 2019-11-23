@@ -13,6 +13,8 @@ require "auth.php";
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         crossorigin="anonymous"
     >
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/style.css" class="href">
     <title>Title</title>
 </head>
 <body>
@@ -32,7 +34,6 @@ require "auth.php";
     </div>
 </nav>
     <div class="orders">
-
     </div>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/orders.js"></script>
