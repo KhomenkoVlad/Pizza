@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if ($_POST['submit']) {
-    if ('admin' == $_POST['user'] AND  md5('admin') == md5($_POST['pass'])) {
+if (isset($_POST['submit']) && isset($_POST['user']) && $_POST['pass']) {
+    if ('admin' == $_POST['user'] AND md5('admin') == md5($_POST['pass'])) {
         $_SESSION['admin'] = true;
         header("Location: index.php");
         exit;
@@ -10,9 +10,8 @@ if ($_POST['submit']) {
         echo '<p>Логин или пароль неверны!</p>';
     }
 }
-var_dump($_POST);
 
-if($_SESSION['admin']){
+if (isset($_SESSION['admin'])) {
     header("Location: index.php");
     exit;
 }
@@ -56,17 +55,19 @@ if($_SESSION['admin']){
         <div class="col-sm-4">
             <form class="form-signin" method="post">
                 <h1 class="h3 mb-3 font-weight-normal">Войдите</h1>
-                <label for="inputUser" class="sr-only">
-                    Имя
-                </label>
-                <input type="text" id="inputUser" class="form-control" placeholder="Имя" name="user" required autofocus>
+                <div class="form-group">
+                    <label for="inputUser" class="sr-only">Имя</label>
+                    <input type="text" id="inputUser" class="form-control" placeholder="Имя" name="user" required autofocus>
+                </div>
 
-                <label for="inputPassword" class="sr-only">
-                    Пароль
-                </label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" name="pass" required>
+                <div class="form-group">
+                    <label for="inputPassword" class="sr-only">Пароль</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" name="pass" required>
+                </div>
 
-                <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block" value="Войти">
+                <div class="form-group">
+                    <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block" value="Войти">
+                </div>
             </form>
         </div>
     </div>
