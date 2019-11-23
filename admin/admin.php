@@ -12,28 +12,20 @@ require "auth.php";
     <nav>
         <a href="admin.php?do=logout">Выход</a>
     </nav>
-    <div id="goods-out" class="goods-out"></div>
-    <h2>Пицца</h2>
+
+    <h2>Добавить или редактировать пиццу</h2> <div id="goods-out" class="goods-out"></div>
     <form enctype="multipart/form-data" method="post">
         <p>Название: <input type="text" id="oname"></p>
         <p>Цена: <input type="text" id="oprice"></p>
         <p>Вес: <input type="text" id="oweight"></p>
-        <input type="file" id="oimg">
         <p><button class="add-to-db">Обновить</button> <button class="del-goods">Удалить</button></p>
     </form>
 
-
-    <br>
-    <br>
-    <br>
-    <br>
-
+    <h2>Добавить картинку</h2>
     <form action="image.php" enctype="multipart/form-data" method="post">
-        <p>
-            Название: <input type="text" name="iname">
-            <input type="file" name="oimg">
-            <input type="submit" value="Отправить">
-        </p>
+        <p>Название: <input type="text" name="iname"></p>
+        <p><input type="file" name="oimg"></p>
+        <p><input type="submit" value="Отправить"></p>
     </form>
 
     <script src="js/jquery-3.2.1.min.js"></script>

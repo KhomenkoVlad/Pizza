@@ -65,7 +65,6 @@ function saveToDb(){
                 "oname" : $('#oname').val(),
                 "oprice" : $('#oprice').val(),
                 "oweight" : $('#oweight').val(),
-                "oimg" : $('#oimg').val(),
                 "oid" : $('#oid').val()
             },
             function(){
@@ -83,7 +82,6 @@ function saveToDb(){
                 "oname" : $('#oname').val(),
                 "oprice" : $('#oprice').val(),
                 "oweight" : $('#oweight').val(),
-                "oimg" : $('#oimg').val(),
                 "oid" : $('#oid').val()
             },
             function(data){

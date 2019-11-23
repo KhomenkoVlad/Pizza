@@ -66,7 +66,7 @@ if($_SESSION['admin']){
                 </label>
                 <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" name="pass" required>
 
-                <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block" value="Войти" />
+                <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block" value="Войти">
             </form>
         </div>
     </div>

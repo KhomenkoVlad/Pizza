@@ -104,22 +104,9 @@ function updateGoods(){
     $name = $_POST['oname'];
     $price = $_POST['oprice'];
     $oweight = $_POST['oweight'];
-    $oimg = $_POST['oimg'];
     $sql = "UPDATE menu SET name_menu = '$name', price_menu = '$price', weight = '$oweight' WHERE id_menu = '$id'";
     $result = @pg_query($conn, $sql) or die("Error query to update one goods");
 
-    if($_FILES[$oimg]["size"] > 1024*3*1024){
-        echo ("Размер файла превышает три мегабайта");
-        exit;
-    }
-    // Проверяем загружен ли файл
-    if(is_uploaded_file($_FILES[$oimg]["tmp_name"])){
-        // Если файл загружен успешно, перемещаем его
-        // из временной директории в конечную
-        move_uploaded_file($_FILES[$oimg]["tmp_name"], "img/pizza/".$_FILES[$oimg]["name"]);
-    } else {
-        echo("Ошибка загрузки файла");
-    }
 }
 
 function newGoods(){
@@ -130,19 +117,6 @@ function newGoods(){
     $sql = "INSERT INTO menu(name_menu, price_menu, weight) VALUES('$name', '$price', '$oweight')";
 
     $result = @pg_query($conn, $sql) or die("Error query to insert one goods");
-
-    if($_FILES["oimg"]["size"] > 1024*3*1024){
-        echo ("Размер файла превышает три мегабайта");
-        exit;
-    }
-    // Проверяем загружен ли файл
-    if(is_uploaded_file($_FILES["oimg"]["tmp_name"])){
-        // Если файл загружен успешно, перемещаем его
-        // из временной директории в конечную
-        move_uploaded_file($_FILES["oimg"]["tmp_name"], "img/pizza/".$_FILES["oimg"]["name"]);
-    } else {
-        echo("Ошибка загрузки файла");
-    }
 }
 
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if($_GET['do'] == 'logout'){
+if(isset($_GET['do']) && $_GET['do'] == 'logout'){
     unset($_SESSION['admin']);
     session_destroy();
 }
