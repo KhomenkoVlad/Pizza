@@ -1,4 +1,4 @@
-var item = [], cart = {};
+let item = [], cart = {};
 
 function init() {
     $.post(
@@ -22,16 +22,17 @@ function loadCart() {
 }
 
 function showStreet(data_street) {
-    var streets = JSON.parse(data_street);
-    var out = '<select id="istreet" class="input-field">';
-    for (var id in streets) {
+    //получаем данные из таблицы "улицы", и выводим их
+    let streets = JSON.parse(data_street);
+    let out = '<select id="istreet" class="input-field">';
+    for (let id in streets) {
         out += `<option value="${id}">${streets[id].name_street}</option>`;
     }
     out += '</select>';
     $('.select-street').html(out);
 }
 
-function showCart(data) {
+function showCart() {
     //вывод корзины
     if (!isEmpty(cart)) {
         $('.main-cart').html('Корзина пуста!');
@@ -41,16 +42,15 @@ function showCart(data) {
             {
                 "action": "init"
             }, function (data) {
-                var menu = JSON.parse(data);
+                let menu = JSON.parse(data);
                 $.post(
                     "admin/core.php",
                     {
                         "action": "initSize"
                     }, function (data_size) {
-                        var sizes = JSON.parse(data_size);
-                        console.log('menu = ', menu, 'cart = ', cart);
-                        var out = '<ul class="cart__list">', total = 0;
-                        for (var items in cart) {
+                        let sizes = JSON.parse(data_size);
+                        let out = '<ul class="cart__list">', total = 0;
+                        for (let items in cart) {
                             item = items.split(',');
                             id_menu = item[0];
                             id_size = item[1];
@@ -83,7 +83,7 @@ function showCart(data) {
 
 function delGoods() {
     //удаляем товар из корзины
-    var id = $(this).attr('data-id');
+    let id = $(this).attr('data-id');
     delete cart[id];
     saveCart();
     showCart();
@@ -91,7 +91,7 @@ function delGoods() {
 
 function plusGoods() {
     //добавляет товар в корзине
-    var id = $(this).attr('data-id');
+    let id = $(this).attr('data-id');
     cart[id]++;
     saveCart();
     showCart();
@@ -99,7 +99,7 @@ function plusGoods() {
 
 function minusGoods() {
     //уменьшаем товар в корзине
-    var id = $(this).attr('data-id');
+    let id = $(this).attr('data-id');
     if (cart[id] == 1) {
         delete cart[id];
     } else {
@@ -125,6 +125,7 @@ function isEmpty(object) {
 }
 
 function addToOrders() {
+    //добавляем товар
     const cartJson = new Array();
     const iname = $('#iname').val();
     const imail = $('#imail').val();
@@ -133,15 +134,14 @@ function addToOrders() {
     const ihouse = $('#ihouse').val();
     const iapart = $('#iapart').val();
 
-    for (var items in cart) {
+    for (let items in cart) {
         item = items.split(',');
         id_menu = item[0];
         id_size = item[1];
         quantity = cart[items];
         cartJson.push({id_menu, id_size, quantity});
-        console.log('id_menu = ', id_menu, 'id_size = ', id_size, 'quantity = ', quantity);
     }
-
+    
     if (iname !== '' && imail !== '' && iphone !== '' && istreet !== '' && ihouse !== '') {
         const user = JSON.stringify({
             iname,
@@ -151,7 +151,8 @@ function addToOrders() {
             ihouse,
             iapart,
         });
-        const cart = JSON.stringify(cartJson);
+        cart = JSON.stringify(cartJson);
+        console.log("cartJson", cartJson);
         if (isEmpty(cart)) {
             $.post(
                 "admin/core.php", {
@@ -160,24 +161,32 @@ function addToOrders() {
                     cart,
                 },
                 function (data) {
-                    if (data === 1) {
-                        console.log('Заказ отправлен');
+                    if (data) {
+                        alert('Заказ отправлен! Спасибо за покупку!');
+                        cart = {}; //очищаем корзину
+                        saveCart();
+                        loadCart();
+                        $('#iname').val('');
+                        $('#imail').val('');
+                        $('#iphone').val('');
+                        $('#istreet').val('');
+                        $('#ihouse').val('');
+                        $('#iapart').val('');
                     } else {
-                        console.log('Повторите заказ');
+                        alert('Повторите заказ');
                     }
                 }
             );
         } else {
-            console.log('Корзина пуста');
+            alert('Корзина пуста');
         }
     } else {
-        console.log('Заполните поля');
+        alert('Заполните поля');
     }
 }
 
 $(document).ready(function () {
     loadCart();
     init();
-
-    $('.send-email').on('click', addToOrders); // отправить письмо с заказом
+    $('.send-email').on('click', addToOrders); // отправить письмо с заказом и добавить запись о заказе
 });

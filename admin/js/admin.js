@@ -9,14 +9,15 @@ function init() {
 }
 
 function showGoods(data) {
+    //вывод товаров из базы данных
     data = JSON.parse(data);
-    var out = '<div class="input-group mb-3">\n' +
+    let out = '<div class="input-group mb-3">\n' +
         '  <div class="input-group-prepend">\n' +
         '    <label class="input-group-text" for="inputGroupSelect01">Виды товара</label>\n' +
         '  </div>' +
         '<select class="custom-select" id="inputGroupSelect01">';
     out += '<option data-id="0">Новая пицца</option>';
-    for (var id_menu in data) {
+    for (let id_menu in data) {
         out +=`<option data-id="${id_menu}">${data[id_menu].name_menu}</option>`;
     }
     out += `</select></div>`;
@@ -25,7 +26,8 @@ function showGoods(data) {
 }
 
 function selectGoods(){
-    var id = $('.goods-out select option:selected').attr('data-id');
+    //вывод данных выбранного товара
+    let id = $('.goods-out select option:selected').attr('data-id');
     $.post(
         "core.php",
         {
@@ -37,6 +39,7 @@ function selectGoods(){
             $('#oname').val(data.name_menu);
             $('#oprice').val(data.price_menu);
             $('#oweight').val(data.weight);
+            $('#odescrp').val(data.description);
             $('#oid').val(data.id_menu);
         }
     );
@@ -44,7 +47,7 @@ function selectGoods(){
 
 function delGoods() {
     //удаляем товар
-    var id = $('.goods-out select option:selected').attr('data-id');
+    let id = $('.goods-out select option:selected').attr('data-id');
     $.post(
         "core.php",
         {
@@ -54,50 +57,62 @@ function delGoods() {
         $('#oname').val('');
         $('#oprice').val('');
         $('#oweight').val('');
+        $('#odescrp').val('');
         $('#oid').val('');
     init();
 }
 
 function saveToDb(){
-    var id = $('#oid').val();
-    if(id!=0){
-        $.post(
-            "core.php",
-            {
-                "action" : "updateGoods",
-                "oid" : id,
-                "oname" : $('#oname').val(),
-                "oprice" : $('#oprice').val(),
-                "oweight" : $('#oweight').val(),
-                "oid" : $('#oid').val()
-            },
-            function(){
-                alert('Запись обновлена');
-                init();
-            }
-        );
-    }
+    if(document.getElementById('oname').value=='' || document.getElementById('oprice').value=='' || 
+    document.getElementById('oweight').value=='' || document.getElementById('odescrp').value=='')  
+        alert('Заполните поля');
     else {
-        $.post(
-            "core.php",
-            {
-                "action" : "newGoods",
-                "oid" : 0,
-                "oname" : $('#oname').val(),
-                "oprice" : $('#oprice').val(),
-                "oweight" : $('#oweight').val(),
-                "oid" : $('#oid').val()
-            },
-            function(data){
-                alert('Запись добавлена');
-                init();
-            }
-        );
+        let id = $('#oid').val();
+        if(id!=0){
+            //обновляем запись
+            $.post(
+                "core.php",
+                {
+                    "action" : "updateGoods",
+                    "oid" : id,
+                    "oname" : $('#oname').val(),
+                    "oprice" : $('#oprice').val(),
+                    "oweight" : $('#oweight').val(),
+                    "odescrp" : $('#odescrp').val(),
+                    "oid" : $('#oid').val()
+                },
+                function(){
+                    alert('Запись обновлена');
+                    init();
+                }
+            );
+        }
+        else {
+            //добавляем новую запись
+            $.post(
+                "core.php",
+                {
+                    "action" : "newGoods",
+                    "oid" : 0,
+                    "oname" : $('#oname').val(),
+                    "oprice" : $('#oprice').val(),
+                    "oweight" : $('#oweight').val(),
+                    "odescrp" : $('#odescrp').val(),
+                    "oid" : $('#oid').val()
+                },
+                function(data){
+                    alert('Запись добавлена');
+                    init();
+                }
+            );
+        }
+        //очищаем поля
+        $('#oname').val('');
+        $('#oprice').val('');
+        $('#oweight').val('');
+        $('#odescrp').val('');
+        $('#oid').val('');
     }
-    $('#oname').val('');
-    $('#oprice').val('');
-    $('#oweight').val('');
-    $('#oid').val('');
 }
 
 $(document).ready(function () {

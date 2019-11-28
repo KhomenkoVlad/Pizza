@@ -31,4 +31,19 @@ switch ($action) {
     case 'addToOrders':
         addToOrders();
         break;
+    case 'closeOrder':
+        closeOrder();
+        break;
+    case 'queryDay':
+        queryDay();
+        break;
+    case 'queryNoOrder':
+        queryNoOrder();
+        break;
+    case 'queryPopularMenu':
+        queryPopularMenu();
+        break;
+    case 'queryMaxPrice':
+        queryMaxPrice();
+        break;
 }

@@ -1,14 +1,4 @@
-item = [2], cart = {}; // корзина
-
-/*function init() {
-    $.post("admin/core.php", {
-            "action" : "init"
-        }, function(data) {
-            goods = JSON.parse(data);
-            showGoods(goods);
-        }, showGoods
-    );
-}*/
+let item = [2], cart = {}; // корзина
 
 function init() {
     $.post(
@@ -24,14 +14,15 @@ function showGoods(data) {
 	//выводим товар на страницу
     data = JSON.parse(data);
 	console.log('showGoods(data)', data);
-    var out = '', index = 1, index_id = 1;
-    for (var id_menu in data) {
+    let out = '', index = 1, index_id = 1;
+    for (let id_menu in data) {
         out +=`<div class="catalog-item">
 			<img src="admin/img/pizza/${data[id_menu].name_menu}.png" class="product__img" alt="pizza">
 			<div class="product__info">
                 <div class="product__title">${data[id_menu].name_menu}</div>
-                <div class="product__price">(${data[id_menu].weight})</div>
-                <p class="price${id_menu} product__price">${data[id_menu].price_menu} грн</p>
+                <div class="product__description">(${data[id_menu].description}, ${data[id_menu].weight} г.)</div>
+                <div class="product__price"><span class="price${id_menu}">${data[id_menu].price_menu}</span> грн</div>
+                
                 <ul class="product__options">
                     <li class="product__option-item">
                         <input class="product__option-input" type="radio" id="item${index_id}" name="size${index}" value="1" checked onClick="$('.price${id_menu}').html(getValue(${data[id_menu].price_menu}, 1))">
@@ -65,8 +56,8 @@ function showGoods(data) {
 
 function addToCart() {
     //добавляем товар в корзину
-    var id_menu = $(this).attr('data-id');
-    var sizeName = $(this)[0].dataset.name;
+    let id_menu = $(this).attr('data-id');
+    let sizeName = $(this)[0].dataset.name;
     id_size = getCheckedValue(document.getElementsByName(sizeName));
     item = [id_menu, id_size];
     if (cart[item] == undefined) {
@@ -102,7 +93,8 @@ function loadCart() {
 }
 
 function getCheckedValue(radioObj) {
-    var value = false;
+    //проверяеться выбранный размер пиццы
+    let value = false;
     radioObj.forEach(element => {
         if (element.checked) {
             value = element.value;
@@ -112,6 +104,7 @@ function getCheckedValue(radioObj) {
 }
 
 function getValue(x, y) {
+    //функция вызывается для отображения изменения цены в зависимости от размера
     return x * y;
 }
 

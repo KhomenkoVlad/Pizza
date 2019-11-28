@@ -12,20 +12,26 @@
     >
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/style.css" class="href">
-    <title>Admin - Add goods</title>
+    <title>Добавить товар - Admin - Pizza Arzis</title>
 </head>
 <body>
 <nav class="card-header">
     <div class="container">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a class="nav-link" href="index.php">Главная</a>
+                <a class="nav-link" href="index.php">Заказы</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="admin.php">Добавить</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="query.php">Отчёты</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="index.php?do=logout">Выход</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../">На главную</a>
             </li>
         </ul>
     </div>
@@ -53,6 +59,11 @@
         </div>
 
         <div class="form-group">
+            <label for="odescrp">Состав:</label>
+            <input type="text" id="odescrp" class="form-control">
+        </div>
+        <input type="hidden" id="oid">
+        <div class="form-group">
             <button class="add-to-db btn btn-primary">Обновить</button>
             <button class="del-goods btn btn-primary">Удалить</button>
         </div>
@@ -70,7 +81,7 @@
                     <span class="input-group-text" id="inputGroupFileAddon01">Загрузить</span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                    <input type="file" name = "iimg" class="custom-file-input" id="inputGroupFile01"
                            aria-describedby="inputGroupFileAddon01">
                     <label class="custom-file-label" for="inputGroupFile01">Выбрать файл</label>
                 </div>
